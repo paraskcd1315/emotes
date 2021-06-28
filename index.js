@@ -1,9 +1,10 @@
 const emotesFolder = './emotes/';
 const fs = require('fs');
+const { name, pathName } = require('./repoData');
 
 let emotesFileData = {
-	name: "ParasKCD's Repo",
-	path: 'emotes',
+	name: name,
+	path: pathName,
 	emotes: []
 };
 
