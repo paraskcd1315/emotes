@@ -1,0 +1,19 @@
+{
+	"name": "paraskcd-emotes-repo",
+	"version": "0.0.1",
+	"description": "Paras KCD's Emotes Repo",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/paraskcd1315/emotes.git"
+	},
+	"author": "Paras Khanchandani",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/paraskcd1315/emotes/issues"
+	},
+	"homepage": "https://github.com/paraskcd1315/emotes#readme"
+}
