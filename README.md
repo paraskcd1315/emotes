@@ -1,7 +1,7 @@
 # ParasKCD's Nitroless Emotes Repo
 
 ## Requirements 
-- NodeJS from <a>https://nodejs.org/</a>
+- [NodeJS](#https://nodejs.org/)
 - Any Terminal App
 - Emotes Folder with actual emotes being saved!
 
@@ -19,4 +19,4 @@ How to use?
 
 ## Repo Link
 
-<a>https://github.com/paraskcd1315/emotes</a>
+- [Link](#https://github.com/paraskcd1315/emotes)
