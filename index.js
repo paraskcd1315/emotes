@@ -1,8 +1,8 @@
-const emotesFolder = './emotes/';
 const fs = require('fs');
 const resizeImg = require('resize-img');
 const gifResize = require('@gumlet/gif-resize');
 const { name, pathName } = require('./repoData');
+const emotesFolder = `./${pathName}/`;
 
 let emotesFileData = {
 	name: name,
@@ -21,28 +21,24 @@ fs.readdir(emotesFolder, (err, files) => {
 
 		emotesFileData.emotes.push(emote);
 
-		if (file.split('.')[1] === 'png') {
-			try {
+		try {
+			if (file.split('.')[1] === 'png') {
 				const image = await resizeImg(fs.readFileSync(emotesFolder + file), {
 					width: 48
 				});
 
 				fs.writeFileSync(emotesFolder + file, image);
 				console.log(file + ' PNG Image Resized');
-			} catch (err) {
-				console.error(err.message);
+			} else {
+				const gifImage = await gifResize({ width: 48 })(
+					fs.readFileSync(emotesFolder + file)
+				);
+
+				fs.writeFileSync(emotesFolder + file, gifImage);
+				console.log(file + ' GIF Image Resized');
 			}
-		} else {
-			try {
-				gifResize({
-					width: 48
-				})(fs.readFileSync(emotesFolder + file)).then((data) => {
-					fs.writeFileSync(emotesFolder + file, data);
-					console.log(file + ' GIF Image Resized');
-				});
-			} catch (error) {
-				console.error(err.message);
-			}
+		} catch (error) {
+			console.error(error.message);
 		}
 	});
 
