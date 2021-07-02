@@ -1,13 +1,16 @@
 # ParasKCD's Nitroless Emotes Repo
 
-## Requirements 
+## Add my Nitroless Repository
+In any Nitroless App, Windows/Android/iOS/macOS, just tap the `+` icon and just add this url `https://emotes.paraskcd.com`
+
+## Make your own Nitroless Repository
+
+### Requirements 
 - [NodeJS](#https://nodejs.org/)
 - Any Terminal App
 - Emotes Folder with actual emotes being saved!
 
-## Using nodejs to batch-insert the emotes to the JSON File
-
-How to use?
+### Using nodejs to batch-insert the emotes to the JSON File
 
 - `git clone https://github.com/paraskcd1315/emotes.git` this project or just download the zip and extract it.
 - Add your emotes into the emotes Folder, the folder name can be changed if you want.
