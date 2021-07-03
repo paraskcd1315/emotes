@@ -1,7 +1,7 @@
 # ParasKCD's Nitroless Emotes Repo
 
 ## Add my Nitroless Repository
-In any Nitroless App, Windows/Android/iOS/macOS, just tap the `+` icon and just add this url `https://emotes.paraskcd.com`
+In any Nitroless App, Windows/Android/iOS/macOS, just tap the `+` icon and just add this url `https://emotes.paraskcd.com/`
 
 ## Make your own Nitroless Repository
 
