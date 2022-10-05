@@ -1,12 +1,12 @@
 const fs = require('fs');
 const resizeImg = require('resize-img');
 const gifResize = require('@gumlet/gif-resize');
-const { name, pathName } = require('./repoData');
+const { name, icon, pathName } = require('./repoData');
 const emotesFolder = `./${pathName}/`;
 
 let emotesFileData = {
 	name: name,
-	icon: 'RepoImage.png',
+	icon: icon,
 	path: pathName,
 	emotes: []
 };
