@@ -6,6 +6,7 @@ const emotesFolder = `./${pathName}/`;
 
 let emotesFileData = {
 	name: name,
+	icon: 'RepoImage.png',
 	path: pathName,
 	emotes: []
 };
@@ -16,7 +17,7 @@ fs.readdir(emotesFolder, (err, files) => {
 	files.forEach(async (file) => {
 		let emote = {
 			name: file.split('.')[0],
-			type: '.' + file.split('.')[1]
+			type: file.split('.')[1]
 		};
 
 		emotesFileData.emotes.push(emote);
