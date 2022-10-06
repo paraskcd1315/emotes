@@ -20,7 +20,9 @@ fs.readdir(emotesFolder, (err, files) => {
 			type: file.split('.')[1]
 		};
 
-		emotesFileData.emotes.push(emote);
+		if(file.split('.')[1] === 'jpg' || file.split('.')[1] === 'png' || file.split('.')[1] === 'gif') {
+			emotesFileData.emotes.push(emote);
+		}
 
 		try {
 			if(file.split('.')[1] === 'jpg') {
