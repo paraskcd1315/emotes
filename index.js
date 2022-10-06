@@ -23,6 +23,14 @@ fs.readdir(emotesFolder, (err, files) => {
 		emotesFileData.emotes.push(emote);
 
 		try {
+			if(file.split('.')[1] === 'jpg') {
+				const image = await resizeImg(fs.readFileSync(emotesFolder + file), {
+					width: 48
+				});
+
+				fs.writeFileSync(emotesFolder + file, image);
+				console.log(file + ' JPG Image Resized');
+			}
 			if (file.split('.')[1] === 'png') {
 				const image = await resizeImg(fs.readFileSync(emotesFolder + file), {
 					width: 48
