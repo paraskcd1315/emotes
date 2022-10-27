@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
+@font-face {
+    font-family: 'Uni Sans';
+    src: url('./assets/fonts/uni-sans/Uni\ Sans\ Heavy.otf');
+    font-weight: 800;
+}
+@font-face {
+    font-family: 'Uni Sans';
+    src: url('./assets/fonts/uni-sans/Uni\ Sans\ Thin.otf');
+    font-weight: 200;
+}
+
+:root {
+    --primary-color: #5865F2;
+    --success-color: #57F287;
+    --danger-color: #ED4245;
+    --warning-color: #FEE75C;
+    --text-color: #4F5660;
+    --background-color: #FFFFFF;
+    --background-secondary-color: #E3E4E8;
+    --background-tertiary-color: #DCDDE1;
+    --boxShadow: 0 1px 2px rgba(0,0,0,0.07), 
+                  0 2px 4px rgba(0,0,0,0.07), 
+                  0 4px 8px rgba(0,0,0,0.07), 
+                  0 8px 16px rgba(0,0,0,0.07),
+                  0 16px 32px rgba(0,0,0,0.07), 
+                  0 32px 64px rgba(0,0,0,0.07);
+    --boxShadowHorizontal: 1px 0 2px rgba(0,0,0,0.07), 
+                2px 0 4px rgba(0,0,0,0.07), 
+                4px 0 8px rgba(0,0,0,0.07), 
+                8px 0 16px rgba(0,0,0,0.07),
+                16px 0 32px rgba(0,0,0,0.07), 
+                32px 0 64px rgba(0,0,0,0.07);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: hsl(220,calc(1*7.7%),22.9%);
+      --background-secondary-color: hsl(223,calc(1*6.9%),19.8%);
+      --background-tertiary-color: hsl(216,calc(1*7.2%),13.5%);
+      --text-color: hsl(0,calc(1*0%),100%);
+    }
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    overflow: hidden auto;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.repoTitle {
+    font-size: 1.5rem;
+    text-align: center;
+    font-family: 'Uni Sans';
+    width: 100%;
+    background-color: var(--background-secondary-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.repoTitle img {
+    width: 5rem;
+    height: 5rem;
+    margin: 1rem;
+}
+
+.contentContainer {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 5rem;
+}
+
+.contentContainer .content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-tertiary-color);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: var(--boxShadow);
+    width: 50%;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.contentContainer .content.emotes {
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(100px, 1fr) );
+}
+
+.emotes {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.contentContainer .content span {
+    margin: 0.5rem;
+}
+
+.btn {
+    background-color: var(--background-color);
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 1rem;
+    border-radius: 2rem;
+    box-shadow: var(--boxShadow);
+    cursor: pointer;
+    transition: all 250ms ease;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn span {
+    font-family: 'Uni Sans';
+    font-weight: 900;
+}
+
+.btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 1rem;
+}
