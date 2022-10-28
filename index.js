@@ -43,6 +43,10 @@ fs.readdir(emotesFolder, (err, files) => {
 			type: file.split('.')[1]
 		};
 
+		if(file.split('.')[0] === icon.split('.')[0]) {
+			return;
+		}
+
 		if(file.split('.')[1] === 'jpg' || file.split('.')[1] === 'png' || file.split('.')[1] === 'gif') {
 			emotesFileData.emotes.push(emote);
 		}
@@ -63,7 +67,8 @@ fs.readdir(emotesFolder, (err, files) => {
 
 				fs.writeFileSync(emotesFolder + file, image);
 				console.log(file + ' PNG Image Resized');
-			} else {
+			} 
+			if(file.split('.')[1] === 'gif') {
 				const gifImage = await gifResize({ width: 48 })(
 					fs.readFileSync(emotesFolder + file)
 				);
