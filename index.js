@@ -1,8 +1,12 @@
 const fs = require('fs');
 const resizeImg = require('resize-img');
 const gifResize = require('@gumlet/gif-resize');
-const { name, icon, pathName, fullURL } = require('./repoData');
+const { name, icon, pathName, stickerPath } = require('./repoData');
 const emotesFolder = `./${pathName}/`;
+const stickerFolder = `./${stickerPath}/`;
+const webp = require('webp-converter');
+
+webp.grant_permission();
 
 let emotesFileData = {}
 
@@ -10,8 +14,9 @@ emotesFileData = {
 	name: name,
 	icon: icon,
 	path: pathName,
-	fullURL: fullURL,
-	emotes: []
+	stickerPath: stickerPath,
+	emotes: [],
+	stickers: []
 };
 
 // check if repoData.js has author defined
@@ -33,6 +38,59 @@ const pngToIco = require('png-to-ico');
 pngToIco(icon).then(buf => {
     fs.writeFileSync('favicon.ico', buf);
 }).catch(console.error);
+
+fs.readdir(stickerFolder, (err, files) => {
+	if (err) console.error(err.message);
+
+	files.forEach(async (file) => {
+		let sticker = {
+			name: file.split('.')[0],
+			type: file.split('.')[1]
+		};
+
+		if (sticker.type != 'webp') {
+			try {
+				if(file.split('.')[1] === 'jpg') {
+					const image = await resizeImg(fs.readFileSync(stickerFolder + file), {
+						width: 512
+					});
+	
+					fs.writeFileSync(stickerFolder + file, image);
+					console.log(file + ' JPG Image Resized');
+				}
+				if (file.split('.')[1] === 'png') {
+					const image = await resizeImg(fs.readFileSync(stickerFolder + file), {
+						width: 512
+					});
+	
+					fs.writeFileSync(stickerFolder + file, image);
+					console.log(file + ' PNG Image Resized');
+				} 
+				if(file.split('.')[1] === 'gif') {
+					const gifImage = await gifResize({ width: 512 })(
+						fs.readFileSync(stickerFolder + file)
+					);
+	
+					fs.writeFileSync(stickerFolder + file, gifImage);
+					console.log(file + ' GIF Image Resized');
+				}
+			} catch (error) {
+				console.error(error.message);
+			}
+			
+			let result;
+			if (sticker.type == 'gif') {
+				result = webp.gwebp(`${stickerFolder}${sticker.name}.${sticker.type}`, `${stickerFolder}${sticker.name}.webp`, "-q 80",logging="-v");
+			} else {
+				result = webp.cwebp(`${stickerFolder}${sticker.name}.${sticker.type}`, `${stickerFolder}${sticker.name}.webp`, "-q 80", logging="-v");
+			}
+			result.then((response) => {
+				console.log("response",response);
+			});
+		}
+		emotesFileData.stickers.push({name: sticker.name, type: 'webp'});
+	})
+})
 
 fs.readdir(emotesFolder, (err, files) => {
 	if (err) console.error(err.message);

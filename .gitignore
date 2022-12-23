@@ -2,5 +2,6 @@ node_modules/
 package-lock.json
 .vscode/
 .DS_Store
-.DS_Store
-.DS_Store
+stickers/*.png
+stickers/*.jpg
+stickers/*.gif

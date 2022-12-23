@@ -10,3 +10,4 @@ exports.author = 'Paras KCD';
 exports.description = 'The Awesome Repository by Paras KCD for Nitroless';
 //Add Keywords here, useful for SEO and Web Crawlers. Remove the line if you don't care about SEO/Web Crawlers.
 exports.keywords = 'Nitroless, nitroless, iOS, macOS, Android, Windows, Emotes, Discord, discord, Nitro, nitro';
+exports.stickerPath = 'stickers'
