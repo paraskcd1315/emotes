@@ -88,7 +88,9 @@ fs.readdir(stickerFolder, (err, files) => {
 				console.log("response",response);
 			});
 		}
-		emotesFileData.stickers.push({name: sticker.name, type: 'webp'});
+		if(sticker.name.length > 0) {
+			emotesFileData.stickers.push({name: sticker.name, type: 'webp'});
+		}
 	})
 })
 
