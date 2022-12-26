@@ -95,4 +95,12 @@ fetch("./index.json")
             })
         }
     }
+
+    if(document.getElementsByClassName("sticker").length > 0) {
+        for(let i = 0; i < document.getElementsByClassName("emote").length; i++) {
+            document.getElementsByClassName("sticker")[i].addEventListener("click", async () => {
+                await window.navigator.clipboard.writeText(document.getElementsByClassName("sticker")[i].id);
+            })
+        }
+    }
 });
