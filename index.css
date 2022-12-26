@@ -116,9 +116,23 @@ code {
     height: auto;
 }
 
-.emotes {
-    width: 40px;
-    height: 40px;
+.contentContainer .content.stickers {
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(128px, 1fr) );
+    height: auto;
+}
+
+.sticker {
+    cursor: pointer;
+    width: 128px;
+}
+
+.sticker img {
+    width: 128px;
+    height: 128px;
+}
+
+.emote {
     cursor: pointer;
 }
 

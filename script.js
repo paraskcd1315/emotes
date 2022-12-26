@@ -6,7 +6,7 @@ fetch("./index.json")
 .then(response => response.json())
 .then(json => {
     const data = json;
-    const { name, icon, path, emotes } = data;
+    const { name, icon, path, emotes, stickerPath, stickers } = data;
 
     //Set title for the Website dynamically
     document.title = name;
@@ -61,6 +61,22 @@ fetch("./index.json")
                     `
                 }).join("")}
             </div>
+            ${stickers != null || stickers != undefined 
+                ? 
+            `
+            <div class='content stickers'>
+                ${stickers.map((sticker) => {
+                    return `
+                    <div id='${fullURL}/${stickerPath}/${sticker.name}.${sticker.type}' class='sticker'>
+                        <img src='./${stickerPath}/${sticker.name}.${sticker.type}' alt='${sticker.name}' />
+                    </div>
+                    `
+                }).join("")}
+            </div>
+            `
+                : 
+            ""}
+            
         </div>
     </div>
     `
