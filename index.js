@@ -1,21 +1,30 @@
 const fs = require('fs');
 const resizeImg = require('resize-img');
 const gifResize = require('@gumlet/gif-resize');
-const { name, icon, pathName, stickerPath } = require('./repoData');
+const { name, icon, pathName } = require('./repoData');
 const emotesFolder = `./${pathName}/`;
-const stickerFolder = `./${stickerPath}/`;
+let stickerFolder = undefined;
 const webp = require('webp-converter');
 
 webp.grant_permission();
 
 let emotesFileData = {}
+let whatsAppStickersData = {}
 
 emotesFileData = {
 	name: name,
 	icon: icon,
 	path: pathName,
-	stickerPath: stickerPath,
 	emotes: [],
+	stickers: []
+};
+
+whatsAppStickersData = {
+	ios_app_store_link: "https://apps.apple.com/ca/app/nitroless/id6444032757",
+	android_play_store_link: "https://play.google.com/store/apps/details?id=com.paraskcd.nitroless",
+	identifier: "com.llsc12.Nitroless",
+	name: name,
+	tray_image: fs.readFileSync(`./${icon}`, {encoding: 'base64'}),
 	stickers: []
 };
 
@@ -23,6 +32,7 @@ emotesFileData = {
 let data = require('./repoData.js');
 if (data['author'] !== null && data['author'] !== undefined && 'author' in data) {
 	emotesFileData.author = data.author;
+	whatsAppStickersData.publisher = data.author;
 }
 
 if (data['description'] !== null && data['description'] !== undefined && 'description' in data) {
@@ -33,66 +43,80 @@ if (data['keywords'] !== null && data['keywords'] !== undefined && 'keywords' in
 	emotesFileData.keywords = data.keywords;
 }
 
+if (data['stickerPath'] !== null && data['stickerPath'] !== undefined && 'stickerPath' in data) {
+	stickerFolder = `./${data.stickerPath}/`;
+	emotesFileData.stickerPath = data.stickerPath;
+}
+
 const pngToIco = require('png-to-ico');
 
 pngToIco(icon).then(buf => {
     fs.writeFileSync('favicon.ico', buf);
 }).catch(console.error);
 
-fs.readdir(stickerFolder, (err, files) => {
-	if (err) console.error(err.message);
+if (stickerFolder !== undefined) {
+	fs.readdir(stickerFolder, (err, files) => {
+		if (err) console.error(err.message);
 
-	files.forEach(async (file) => {
-		let sticker = {
-			name: file.split('.')[0],
-			type: file.split('.')[1]
-		};
+		console.log(files);
 
-		if (sticker.type != 'webp') {
-			try {
-				if(file.split('.')[1] === 'jpg') {
-					const image = await resizeImg(fs.readFileSync(stickerFolder + file), {
-						width: 512
-					});
-	
-					fs.writeFileSync(stickerFolder + file, image);
-					console.log(file + ' JPG Image Resized');
+		files.forEach(async (file) => {
+			let sticker = {
+				name: file.split('.')[0],
+				type: file.split('.')[1]
+			};
+
+			if (sticker.type != 'webp') {
+				try {
+					if(file.split('.')[1] === 'jpg') {
+						const image = await resizeImg(fs.readFileSync(stickerFolder + file), {
+							width: 512
+						});
+		
+						fs.writeFileSync(stickerFolder + file, image);
+						console.log(file + ' JPG Image Resized');
+					}
+					if (file.split('.')[1] === 'png') {
+						const image = await resizeImg(fs.readFileSync(stickerFolder + file), {
+							width: 512
+						});
+		
+						fs.writeFileSync(stickerFolder + file, image);
+						console.log(file + ' PNG Image Resized');
+					} 
+					if(file.split('.')[1] === 'gif') {
+						const gifImage = await gifResize({ width: 512 })(
+							fs.readFileSync(stickerFolder + file)
+						);
+		
+						fs.writeFileSync(stickerFolder + file, gifImage);
+						console.log(file + ' GIF Image Resized');
+					}
+				} catch (error) {
+					console.error(error.message);
 				}
-				if (file.split('.')[1] === 'png') {
-					const image = await resizeImg(fs.readFileSync(stickerFolder + file), {
-						width: 512
-					});
-	
-					fs.writeFileSync(stickerFolder + file, image);
-					console.log(file + ' PNG Image Resized');
-				} 
-				if(file.split('.')[1] === 'gif') {
-					const gifImage = await gifResize({ width: 512 })(
-						fs.readFileSync(stickerFolder + file)
-					);
-	
-					fs.writeFileSync(stickerFolder + file, gifImage);
-					console.log(file + ' GIF Image Resized');
+				
+				let result;
+				if (sticker.type == 'gif') {
+					result = webp.gwebp(`${stickerFolder}${sticker.name}.${sticker.type}`, `${stickerFolder}${sticker.name}.webp`, "-q 80",logging="-v");
+				} else {
+					result = webp.cwebp(`${stickerFolder}${sticker.name}.${sticker.type}`, `${stickerFolder}${sticker.name}.webp`, "-q 80", logging="-v");
 				}
-			} catch (error) {
-				console.error(error.message);
+				result.then((response) => {
+					console.log("response",response);
+				});
 			}
-			
-			let result;
-			if (sticker.type == 'gif') {
-				result = webp.gwebp(`${stickerFolder}${sticker.name}.${sticker.type}`, `${stickerFolder}${sticker.name}.webp`, "-q 80",logging="-v");
-			} else {
-				result = webp.cwebp(`${stickerFolder}${sticker.name}.${sticker.type}`, `${stickerFolder}${sticker.name}.webp`, "-q 80", logging="-v");
+			if(sticker.name.length > 0) {
+				emotesFileData.stickers.push({name: sticker.name, type: 'webp'});
+				let stickerData = fs.readFileSync(stickerFolder + file, {encoding: 'base64'})
+				whatsAppStickersData.stickers.push({
+					image_data: stickerData,
+					emojis: []
+				})
 			}
-			result.then((response) => {
-				console.log("response",response);
-			});
-		}
-		if(sticker.name.length > 0) {
-			emotesFileData.stickers.push({name: sticker.name, type: 'webp'});
-		}
+		})
 	})
-})
+}
 
 fs.readdir(emotesFolder, (err, files) => {
 	if (err) console.error(err.message);
@@ -146,5 +170,12 @@ fs.readdir(emotesFolder, (err, files) => {
 			console.error(err);
 		}
 		console.log('\nindex.json was made');
+	});
+
+	fs.writeFile('whatsapp.json', JSON.stringify(whatsAppStickersData), 'utf8', (err) => {
+		if (err) {
+			console.error(err);
+		}
+		console.log('\whatsapp.json was made');
 	});
 });
