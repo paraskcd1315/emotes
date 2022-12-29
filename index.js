@@ -106,6 +106,7 @@ if (stickerFolder !== undefined) {
 			}
 			if(sticker.name.length > 0) {
 				emotesFileData.stickers.push({name: sticker.name, type: 'webp'});
+				console.log(file);
 				let stickerData = fs.readFileSync(stickerFolder + file, {encoding: 'base64'})
 				whatsAppStickersData.stickers.push({
 					image_data: stickerData,
