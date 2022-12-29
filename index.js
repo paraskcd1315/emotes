@@ -20,8 +20,6 @@ emotesFileData = {
 };
 
 whatsAppStickersData = {
-	ios_app_store_link: "https://apps.apple.com/ca/app/nitroless/id6444032757",
-	android_play_store_link: "https://play.google.com/store/apps/details?id=com.paraskcd.nitroless",
 	identifier: "com.llsc12.Nitroless",
 	name: name,
 	tray_image: fs.readFileSync(`./${icon}`, {encoding: 'base64'}),
