@@ -9,7 +9,8 @@ const webp = require('webp-converter');
 webp.grant_permission();
 
 let emotesFileData = {}
-let whatsAppStickersData = {}
+let whatsAppStickersDataiOS = {}
+let whatsAppStickersDataAndroid = {}
 
 emotesFileData = {
 	name: name,
@@ -19,18 +20,26 @@ emotesFileData = {
 	stickers: []
 };
 
-whatsAppStickersData = {
+whatsAppStickersDataiOS = {
 	identifier: "com.llsc12.Nitroless",
 	name: name,
 	tray_image: fs.readFileSync(`./${icon}`, {encoding: 'base64'}),
 	stickers: []
 };
 
+whatsAppStickersDataAndroid = {
+	identifier: "com.paraskcd.Nitroless",
+	name: name,
+	tray_image: fs.readFileSync(`./${icon}`, {encoding: 'base64'}),
+	stickers: []
+}
+
 // check if repoData.js has author defined
 let data = require('./repoData.js');
 if (data['author'] !== null && data['author'] !== undefined && 'author' in data) {
 	emotesFileData.author = data.author;
-	whatsAppStickersData.publisher = data.author;
+	whatsAppStickersDataiOS.publisher = data.author;
+	whatsAppStickersDataAndroid.publisher = data.author;
 }
 
 if (data['description'] !== null && data['description'] !== undefined && 'description' in data) {
@@ -108,10 +117,14 @@ if (stickerFolder !== undefined) {
 				emotesFileData.stickers.push({name: sticker.name, type: 'webp'});
 				console.log(file);
 				let stickerData = fs.readFileSync(stickerFolder + file, {encoding: 'base64'})
-				whatsAppStickersData.stickers.push({
+				whatsAppStickersDataiOS.stickers.push({
 					image_data: stickerData,
 					emojis: []
-				})
+				});
+				whatsAppStickersDataAndroid.stickers.push({
+					image_data: stickerData,
+					emojis: []
+				});
 			}
 		})
 	})
@@ -171,10 +184,17 @@ fs.readdir(emotesFolder, (err, files) => {
 		console.log('\nindex.json was made');
 	});
 
-	fs.writeFile('whatsapp.json', JSON.stringify(whatsAppStickersData), 'utf8', (err) => {
+	fs.writeFile('whatsapp.json', JSON.stringify(whatsAppStickersDataiOS), 'utf8', (err) => {
 		if (err) {
 			console.error(err);
 		}
-		console.log('\whatsapp.json was made');
+		console.log('\nwhatsapp.json was made');
+	});
+
+	fs.writeFile('whatsapp-android.json', JSON.stringify(whatsAppStickersDataAndroid), 'utf8', (err) => {
+		if (err) {
+			console.error(err);
+		}
+		console.log('\nwhatsapp-android.json was made');
 	});
 });
